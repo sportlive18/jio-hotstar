@@ -1,44 +1,524 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Hi - Odysee</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-FMP9REY96D"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-FMP9REY96D');
-</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sportlink</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet"/>
   <style>
-    html, body {
-      margin: 0;
-      height: 100%;
-      background: #000;
-      overflow: hidden;
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red: #e8002d;
+      --dark: #0a0a0f;
+      --mid: #111118;
+      --border: #1e1e2a;
+      --text: #e0e0f0;
+      --muted: #6a6a88;
+      --glow: rgba(232, 0, 45, 0.35);
+      --wa-green: #25D366;
+      --wa-dark: #1ebe5d;
+      --wa-glow: rgba(37, 211, 102, 0.35);
     }
-    iframe {
-      position: fixed;
+
+    body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: 'Rajdhani', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--mid);
+      border-bottom: 2px solid var(--red);
+      padding: 0 2rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
       top: 0;
-      left: 0;
+      z-index: 100;
+      box-shadow: 0 4px 32px var(--glow);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--red);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      color: #fff;
+      letter-spacing: 1px;
+      box-shadow: 0 0 14px var(--glow);
+    }
+
+    .logo-text {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      letter-spacing: 4px;
+      color: #fff;
+      text-shadow: 0 0 20px var(--glow);
+    }
+
+    .logo-text span {
+      color: var(--red);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1.4rem;
+    }
+
+    nav {
+      display: flex;
+      gap: 1.6rem;
+      align-items: center;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--red); }
+
+    /* WhatsApp Nav Button */
+    .wa-nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--wa-green);
+      color: #fff !important;
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 5px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+      box-shadow: 0 2px 14px var(--wa-glow);
+      white-space: nowrap;
+    }
+
+    .wa-nav-btn:hover {
+      background: var(--wa-dark);
+      box-shadow: 0 4px 22px var(--wa-glow);
+      transform: translateY(-1px);
+      color: #fff !important;
+    }
+
+    .wa-nav-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: #fff;
+      flex-shrink: 0;
+    }
+
+    .live-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(232,0,45,0.12);
+      border: 1px solid var(--red);
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--red);
+    }
+
+    .live-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--red);
+      border-radius: 50%;
+      animation: blink 1.2s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+
+    /* ── CHANNEL BAR ── */
+    .channel-bar {
+      background: linear-gradient(90deg, #13000a 0%, #0f0f1a 40%, #13000a 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 2rem;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .channel-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .channel-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--red);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .channel-icon svg {
+      width: 16px;
+      height: 16px;
+      fill: white;
+    }
+
+    .channel-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.35rem;
+      letter-spacing: 3px;
+      color: #fff;
+    }
+
+    .channel-sub {
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .divider {
+      width: 1px;
+      height: 28px;
+      background: var(--border);
+      margin: 0 4px;
+    }
+
+    .quality-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      background: var(--red);
+      color: white;
+      padding: 3px 8px;
+      border-radius: 3px;
+    }
+
+    /* ── MAIN ── */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1.5rem;
+      gap: 1.5rem;
+    }
+
+    .player-wrap {
+      width: 100%;
+      max-width: 1100px;
+      position: relative;
+    }
+
+    .player-frame {
+      width: 100%;
+      aspect-ratio: 16/9;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow:
+        0 0 0 1px rgba(232,0,45,0.15),
+        0 8px 60px rgba(0,0,0,0.7),
+        0 0 40px rgba(232,0,45,0.12);
+      position: relative;
+      background: #000;
+    }
+
+    .player-corner {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border-color: var(--red);
+      border-style: solid;
+      z-index: 2;
+    }
+    .player-corner.tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; border-radius: 10px 0 0 0; }
+    .player-corner.tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; border-radius: 0 10px 0 0; }
+    .player-corner.bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; border-radius: 0 0 0 10px; }
+    .player-corner.br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; border-radius: 0 0 10px 0; }
+
+    .player-frame iframe {
       width: 100%;
       height: 100%;
-      border: 0;
+      border: none;
+      display: block;
+    }
+
+    /* ── WHATSAPP BANNER (below player) ── */
+    .wa-banner {
+      width: 100%;
+      max-width: 1100px;
+      background: linear-gradient(135deg, #0a2a14 0%, #0d1f0d 50%, #07200f 100%);
+      border: 1px solid rgba(37, 211, 102, 0.3);
+      border-radius: 10px;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      box-shadow: 0 4px 30px rgba(37, 211, 102, 0.08), 0 0 0 1px rgba(37,211,102,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wa-banner::before {
+      content: '';
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 160px;
+      height: 160px;
+      background: radial-gradient(circle, rgba(37,211,102,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .wa-banner-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .wa-icon-large {
+      width: 48px;
+      height: 48px;
+      background: var(--wa-green);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 18px var(--wa-glow);
+    }
+
+    .wa-icon-large svg {
+      width: 26px;
+      height: 26px;
+      fill: #fff;
+    }
+
+    .wa-banner-text {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .wa-banner-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem;
+      letter-spacing: 2.5px;
+      color: #fff;
+    }
+
+    .wa-banner-sub {
+      font-size: 0.82rem;
+      color: rgba(37,211,102,0.75);
+      letter-spacing: 0.8px;
+    }
+
+    .wa-join-btn {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      background: var(--wa-green);
+      color: #fff;
+      text-decoration: none;
+      padding: 11px 24px;
+      border-radius: 7px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      white-space: nowrap;
+      flex-shrink: 0;
+      box-shadow: 0 4px 20px var(--wa-glow);
+      transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+    }
+
+    .wa-join-btn:hover {
+      background: var(--wa-dark);
+      box-shadow: 0 6px 28px var(--wa-glow);
+      transform: translateY(-2px);
+    }
+
+    .wa-join-btn svg {
+      width: 18px;
+      height: 18px;
+      fill: #fff;
+      flex-shrink: 0;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--mid);
+      border-top: 2px solid var(--border);
+      padding: 1.4rem 2rem;
+      text-align: center;
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      letter-spacing: 4px;
+      color: var(--muted);
+    }
+
+    .footer-logo span { color: var(--red); }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      color: var(--muted);
+      letter-spacing: 1px;
+    }
+
+    .footer-copy strong {
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      nav { display: none; }
+      header { padding: 0 1rem; }
+      .channel-bar { padding: 8px 1rem; }
+      main { padding: 1rem; }
+      .wa-banner { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .wa-join-btn { width: 100%; justify-content: center; }
+      .wa-nav-btn span { display: none; }
+      .wa-nav-btn { padding: 6px 10px; }
     }
   </style>
 </head>
 <body>
 
-<iframe
-  src="https://player.kick.com/dillzy12345"
-  allow="fullscreen; autoplay"
-  allowfullscreen
-  sandbox="allow-scripts allow-same-origin allow-presentation allow-popups">
-</iframe>
+  <!-- HEADER -->
+  <header>
+    <div class="logo">
+      <div class="logo-icon">SL</div>
+      <div class="logo-text">Sport<span>link</span></div>
+    </div>
+    <div class="header-right">
+      <nav>
+        <a href="#">Live</a>
+        <a href="#">Sports</a>
+        <a href="#">Schedule</a>
+        <!-- WhatsApp Nav Button -->
+        <a href="https://whatsapp.com/channel/0029VbC2oQsC6ZvmwpR3v73v" target="_blank" rel="noopener noreferrer" class="wa-nav-btn">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          <span>Join Channel</span>
+        </a>
+      </nav>
+      <div class="live-badge">
+        <div class="live-dot"></div>
+        LIVE
+      </div>
+    </div>
+  </header>
+
+  <!-- CHANNEL BAR -->
+  <div class="channel-bar">
+    <div class="channel-label">
+      <div class="channel-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+      </div>
+      <div>
+        <div class="channel-name">Hotstar</div>
+        <div class="channel-sub">ENG · Live Broadcast</div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="quality-badge">HD</div>
+  </div>
+
+  <!-- MAIN PLAYER -->
+  <main>
+    <div class="player-wrap">
+      <div class="player-frame">
+        <div class="player-corner tl"></div>
+        <div class="player-corner tr"></div>
+        <div class="player-corner bl"></div>
+        <div class="player-corner br"></div>
+        <iframe
+          src="https://player.kick.com/dillzy12345"
+          allowfullscreen
+          allow="autoplay; encrypted-media; fullscreen"
+          scrolling="no"
+          title="Hotstar - ENG"
+        ></iframe>
+      </div>
+    </div>
+
+    <!-- WHATSAPP BANNER -->
+    <div class="wa-banner">
+      <div class="wa-banner-left">
+        <div class="wa-icon-large">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+        </div>
+        <div class="wa-banner-text">
+          <div class="wa-banner-title">Join Our WhatsApp Channel</div>
+          <div class="wa-banner-sub">Get live updates, schedules &amp; highlights — instantly</div>
+        </div>
+      </div>
+      <a href="https://whatsapp.com/channel/0029VbC2oQsC6ZvmwpR3v73v" target="_blank" rel="noopener noreferrer" class="wa-join-btn">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Join Now
+      </a>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">Sport<span>link</span></div>
+      <div class="footer-copy">
+        Sportlink &copy; 2026 &mdash; All rights reserved by <strong>Sayan</strong>
+      </div>
+    </div>
+  </footer>
+
 </body>
-  <script>(function(s){s.dataset.zone='10603308',s.src='https://bvtpk.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
-  
 </html>
